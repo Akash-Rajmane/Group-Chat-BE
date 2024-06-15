@@ -34,7 +34,7 @@ exports.signUpUser = async(req, res, next) => {
 
     
         // Respond with success message
-        res.status(201).json({ message: 'Signed up successfully!', user: { userName, email, phone }});
+        res.status(201).json({ message: 'Signed up successfully!', user: { id, userName, email, phone }});
         
       } catch (error) {
         console.error('Error while signing up:', error);
@@ -48,7 +48,7 @@ exports.logInUser = async (req, res, next) => {
     const { email, password } = req.body;
 
     // Check if email and password are provided
-    if (!email || !password) {
+    if (email.length===0 || password.length===0) {
       return res.status(400).json({ message: 'Please provide valid email or password' });
     }
 
@@ -75,8 +75,10 @@ exports.logInUser = async (req, res, next) => {
       { expiresIn: '1h' } // Token expiration time
     );
 
+    const loggedInUser = {id: user.id, userName: user.userName, email: user.email, phone:user.phone}
+
     // Respond with success message and token
-    res.status(200).json({ message: 'Loggged in successfully!', token });
+    res.status(200).json({ message: 'Loggged in successfully!', token, user:loggedInUser });
   } catch (error) {
     console.error('Error logging in:', error);
     res.status(500).json({ message: 'Internal server error' });
