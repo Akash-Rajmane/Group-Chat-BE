@@ -18,7 +18,7 @@ exports.signUpUser = async(req, res, next) => {
         // Check if email already exists in the database
         const existingUser = await User.findOne({ where: { email } });
         if (existingUser) {
-          return res.status(409).json({ message: 'Email already exists' });
+          return res.status(409).json({ message: 'User already exists, please login.' });
         }
     
         // Hash the password

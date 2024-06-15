@@ -16,7 +16,7 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 
-app.use("/user",userRoutes);
+app.use("/api/user",userRoutes);
 
 
 sequelize.sync().then(() => {
